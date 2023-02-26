@@ -12,7 +12,8 @@ In some aspects it's similar to github.com/uber-go/fx library but there are main
 
 You can check `/examples` dir to see working code.
 
-See godoc: [![GoDoc](https://godoc.org/github.com/g4s8/go-lifecycle?status.svg)](https://godoc.org/github.com/g4s8/go-lifecycle)
+[![CI](https://github.com/g4s8/go-lifecycle/actions/workflows/go.yml/badge.svg)](https://github.com/g4s8/go-lifecycle/actions/workflows/go.yml)
+[![GoDoc](https://godoc.org/github.com/g4s8/go-lifecycle?status.svg)](https://godoc.org/github.com/g4s8/go-lifecycle)
 
 ## Install
 
