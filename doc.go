@@ -2,39 +2,42 @@
 // https://github.com/g4s8/go-lifecycle/blob/master/LICENSE
 
 /*
-Package lifecycle provides service lifecycle management.
+Package lifecycle is a powerful toolset for managing the lifecycle of services,
+including startup and shutdown hooks, health checks, and service monitoring.
 
-This package provides a set of tools to manage service lifecycle, including startup and shutdown hooks, health checks, and service monitoring.
+At the heart of the package is the Lifecycle component, which acts as a service lifecycle manager.
+It provides a variety of methods for registering startup and shutdown hooks, as well as starting and stopping the service.
+Additionally, the Lifecycle component can be used to subscribe to service state changes, which can be a valuable tool for monitoring the service state.
 
-The main component of this package is `Lifecycle`, which is a service lifecycle manager. It provides methods to register startup and shutdown hooks,
-and to start and stop the service. `Lifecycle` also provides a method to subscribe to service state changes, which can be used to monitor the service state.
+In addition to the Lifecycle component, the package includes a SignalHandler component,
+which can be used to gracefully handle OS signals and stop the service when necessary.
 
-Lifecycle package also provides a `SignalHandler` component, which can be used to handle OS signals and stop the service on receiving a signal.
+To integrate the lifecycle package with other packages,
+the adaptors package provides a variety of adaptors.
+For example, the http server adaptor allows for seamless integration with web servers.
 
-Adaptors package provides a set of adaptors to integrate with other packages, such as web server adaptor.
+Finally, the health package provides a health check service that can be used to monitor the health of the service.
 
-Health package provides a health check service, which can be used to check the service health.
-
-Package overview:
-  - `github.com/g4s8/go-lifecycle/pkg/lifecycle` - components to manage lifecycle
-  - `github.com/g4s8/go-lifecycle/pkg/adaptors` - some common adaptors, e.g. http server adaptor
-  - `github.com/g4s8/go-lifecycle/pkg/health` - healthcheck for services
-  - `github.com/g4s8/go-lifecycle/pkg/types` - public types
+Package Overview:
+  - github.com/g4s8/go-lifecycle/pkg/lifecycle: Components for managing service lifecycle
+  - github.com/g4s8/go-lifecycle/pkg/adaptors: Common adaptors, such as the http server adaptor
+  - github.com/g4s8/go-lifecycle/pkg/health: Healthcheck service for monitoring service health
+  - github.com/g4s8/go-lifecycle/pkg/types: Public types used in the package.
 
 Example:
-```go
-package main
 
-import (
+	package main
 
-	"log"
-	"net/http"
+	import (
 
-	"github.com/g4s8/go-lifecycle/pkg/adaptors"
-	"github.com/g4s8/go-lifecycle/pkg/health"
-	"github.com/g4s8/go-lifecycle/pkg/lifecycle"
+		"log"
+		"net/http"
 
-)
+		"github.com/g4s8/go-lifecycle/pkg/adaptors"
+		"github.com/g4s8/go-lifecycle/pkg/health"
+		"github.com/g4s8/go-lifecycle/pkg/lifecycle"
+
+	)
 
 	func main() {
 		web := http.NewServeMux()
@@ -59,7 +62,5 @@ import (
 		}
 		log.Print("shutdown complete")
 	}
-
-```
 */
 package lifecycle

@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/g4s8/go-lifecycle/pkg/adaptors"
-	"github.com/g4s8/go-lifecycle/pkg/health"
 	"github.com/g4s8/go-lifecycle/pkg/lifecycle"
 )
 
@@ -22,8 +21,6 @@ func main() {
 
 	lf := lifecycle.New(lifecycle.DefaultConfig)
 	svc.RegisterLifecycle("web", lf)
-	hs := health.NewService(":9999", lf)
-	hs.RegisterLifecycle(lf)
 	lf.Start()
 	sig := lifecycle.NewSignalHandler(lf, nil)
 	sig.Start(lifecycle.DefaultShutdownConfig)

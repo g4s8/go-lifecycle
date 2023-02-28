@@ -1,19 +1,31 @@
-Simple and flexible Go lifecycle manager library.
+Introducing a powerful and versatile Go library for managing the lifecycle of your applications!
 
-It helps to confiigure and run multiple services within one application. It has components to
-manage application lifecycle, handle system signals to implement graceful shutdown, service state monitoring
-tools, health-check built-in service, and adapters for common scenarios (e.g. http server).
-
-In some aspects it's similar to github.com/uber-go/fx library but there are main differences:
- - it's not DI (dependency injection) containers, only lifecycle manager.
- - no reflection and magic inside, just static types.
- - flexible configuration for lifecycle manager and for each service if needed.
- - built-in healthcheck service monitoring tools.
-
-You can check `/examples` dir to see working code.
+It is designed to be simple, yet flexible, giving you complete control over configuring and running multiple services
+within a single application. With built-in tools for monitoring service state, implementing graceful shutdowns,
+and conducting health checks, this library provides everything you need to ensure your application runs smoothly.
 
 [![CI](https://github.com/g4s8/go-lifecycle/actions/workflows/go.yml/badge.svg)](https://github.com/g4s8/go-lifecycle/actions/workflows/go.yml)
 [![GoDoc](https://godoc.org/github.com/g4s8/go-lifecycle?status.svg)](https://godoc.org/github.com/g4s8/go-lifecycle)
+
+## Key Features
+
+  - Simple and flexible Go lifecycle manager library.
+  - Components to manage application lifecycle, handle system signals for graceful shutdowns, and built-in health-check service.
+  - Adapters for common scenarios, such as HTTP servers.
+  - No reflection or magic behind the scenes, just static types.
+  - Flexible configuration options for both the lifecycle manager and each individual service.
+
+## How go-lifecycle Compares to Others
+
+While our library is similar in some aspects to the `github.com/uber-go/fx` library, there are several main differences:
+  - This library is not a DI container, only a lifecycle manager.
+  - This library uses only static types, without any reflection or magic behind the scenes.
+  - This library offers more flexibility in configuration options.
+
+## Get Started
+
+See [Usage](#Usage) examples below and
+check out the `/examples` directory to see it in action!
 
 ## Install
 
@@ -47,7 +59,8 @@ lf.Start()
 ### Shutdown on SIGTERM:
 ```go
 sig := lifecycle.NewSignalHandler(lf, nil)
-sig.Start(lifecycle.DefaultShutdownConfig)
+sig.Start(lifecycle.DefaultShutdownConfig) // start it async
+sig.Wait() // wait for signal
 ```
 
 The lifecycle will shut down, on SIGTERM or interrup signals.
@@ -133,3 +146,10 @@ which can monitor service statuses in lifecycle manager:
 hs := health.NewService(":9999", lf)
 hs.RegisterLifecycle(lf)
 ```
+
+## Contributing
+
+ - Commit changes and create pull request.
+ - Describe your changes in PR title and description.
+ - Use (Conventional Commits)[https://www.conventionalcommits.org/en/v1.0.0/] specification.
+ - Ensure CI checks are green.
