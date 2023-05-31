@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/pkg/errors v0.9.1
-	github.com/stretchr/testify v1.8.3
+	github.com/stretchr/testify v1.8.4
 	go.uber.org/multierr v1.11.0
 	google.golang.org/grpc v1.55.0
 )
