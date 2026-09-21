@@ -7,10 +7,11 @@ import (
 	"testing"
 	"time"
 
+	"context"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
-	"context"
 
 	internal_http "github.com/g4s8/go-lifecycle/internal/http"
 )
