@@ -1,0 +1,18 @@
+name: golangci-lint
+"on":
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+jobs:
+  lint:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.25'
+      - uses: actions/checkout@v6
+      - uses: golangci/golangci-lint-action@v9
+        with:
+          version: v2.13
