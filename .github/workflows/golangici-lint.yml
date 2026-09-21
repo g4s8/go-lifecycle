@@ -6,7 +6,6 @@ name: golangci-lint
     branches: ["master"]
 jobs:
   lint:
-    needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-go@v6
