@@ -23,10 +23,11 @@ func (l *Lifecycle) Start(ctx context.Context) error {
 	errCh := make(chan error, len(l.items))
 
 	var wg sync.WaitGroup
+	wg.Add(len(l.items))
 	for _, item := range l.items {
-		wg.Add(1)
-		go func(item Runner) {
+		go func() {
 			defer wg.Done()
+
 			if err := item.Run(ctx); err != nil {
 				if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
 					return
@@ -34,7 +35,7 @@ func (l *Lifecycle) Start(ctx context.Context) error {
 				cancel()
 				errCh <- err
 			}
-		}(item)
+		}()
 	}
 
 	wg.Wait()

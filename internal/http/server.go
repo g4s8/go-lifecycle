@@ -47,15 +47,15 @@ func RunServer(ctx context.Context, srv *http.Server) error {
 	doneCh := make(chan struct{})
 	errCh := make(chan error, 1)
 
-	go func(s *http.Server) {
+	go func() {
 		defer close(doneCh)
-		if err := s.Serve(ln); err != nil {
+		if err := srv.Serve(ln); err != nil {
 			if errors.Is(err, http.ErrServerClosed) {
 				return
 			}
 			errCh <- fmt.Errorf("serve: %w", err)
 		}
-	}(srv)
+	}()
 
 	var errs []error
 	select {
