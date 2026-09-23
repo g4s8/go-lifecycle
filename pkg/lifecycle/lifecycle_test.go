@@ -66,7 +66,7 @@ func TestLifecycle_MultipleRunners_AllSucceed(t *testing.T) {
 	var lf lifecycle.Lifecycle
 
 	ready := make(chan struct{}, 3)
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		lf.Add(lifecycle.RunnerFunc(func(ctx context.Context) error {
 			ready <- struct{}{}
 			<-ctx.Done()
@@ -78,7 +78,7 @@ func TestLifecycle_MultipleRunners_AllSucceed(t *testing.T) {
 	go func() { done <- lf.Start(ctx) }()
 
 	// Wait for all runners to start
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		<-ready
 	}
 	cancel()

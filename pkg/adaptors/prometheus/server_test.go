@@ -42,15 +42,14 @@ func TestServer_Run_MetricsEndpoint(t *testing.T) {
 
 	srv := prometheusadaptor.NewServer(registry, port, "/metrics")
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	go srv.Run(ctx) //nolint:errcheck
 
 	url := fmt.Sprintf("http://127.0.0.1:%d/metrics", port)
 	var resp *http.Response
 	var err error
-	for i := 0; i < 50; i++ {
+	for range 50 {
 		resp, err = http.Get(url)
 		if err == nil {
 			break

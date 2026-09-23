@@ -80,8 +80,7 @@ func TestGRPCRunner_HealthCheck(t *testing.T) {
 
 	runner := grpcadaptor.NewGRPCRunner(fmt.Sprintf("127.0.0.1:%d", port), srv)
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	ready := make(chan struct{})
 	go func() {
@@ -93,7 +92,7 @@ func TestGRPCRunner_HealthCheck(t *testing.T) {
 	addr := fmt.Sprintf("127.0.0.1:%d", port)
 	var conn *grpc.ClientConn
 	var connErr error
-	for i := 0; i < 50; i++ {
+	for range 50 {
 		//nolint:staticcheck // grpc.Dial is deprecated in newer versions, but required for v1.53
 		conn, connErr = grpc.Dial(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 		if connErr == nil {
@@ -107,7 +106,7 @@ func TestGRPCRunner_HealthCheck(t *testing.T) {
 	client := grpc_health_v1.NewHealthClient(conn)
 	var resp *grpc_health_v1.HealthCheckResponse
 	var checkErr error
-	for i := 0; i < 50; i++ {
+	for range 50 {
 		resp, checkErr = client.Check(context.Background(), &grpc_health_v1.HealthCheckRequest{})
 		if checkErr == nil {
 			break

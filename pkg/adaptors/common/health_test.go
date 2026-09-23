@@ -18,7 +18,7 @@ import (
 
 func waitReady(t *testing.T, url string) {
 	t.Helper()
-	for i := 0; i < 50; i++ {
+	for range 50 {
 		resp, err := http.Get(url)
 		if err == nil {
 			resp.Body.Close()
@@ -54,7 +54,7 @@ func TestHealthRunner_Healthy(t *testing.T) {
 	body, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 
-	var data map[string]interface{}
+	var data map[string]any
 	require.NoError(t, json.Unmarshal(body, &data))
 	assert.Equal(t, "healthy", data["status"])
 	assert.Nil(t, data["errors"])
@@ -77,10 +77,10 @@ func TestHealthRunner_Unhealthy(t *testing.T) {
 	body, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
 
-	var data map[string]interface{}
+	var data map[string]any
 	require.NoError(t, json.Unmarshal(body, &data))
 	assert.Equal(t, "unhealthy", data["status"])
-	errs, ok := data["errors"].([]interface{})
+	errs, ok := data["errors"].([]any)
 	require.True(t, ok)
 	assert.Len(t, errs, 2)
 }

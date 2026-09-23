@@ -73,8 +73,7 @@ func TestRunServer_HandlerResponds(t *testing.T) {
 	})
 	srv := internal_http.NewServer("127.0.0.1", port, internal_http.WithMux(mux))
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	ready := make(chan struct{})
 	go func() {
@@ -86,7 +85,7 @@ func TestRunServer_HandlerResponds(t *testing.T) {
 	// Give server a moment to start
 	var resp *http.Response
 	var err error
-	for i := 0; i < 20; i++ {
+	for range 20 {
 		resp, err = http.Get(fmt.Sprintf("http://127.0.0.1:%d/", port))
 		if err == nil {
 			break
