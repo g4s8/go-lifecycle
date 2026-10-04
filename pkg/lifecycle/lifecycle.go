@@ -12,8 +12,8 @@ type Lifecycle struct {
 	items []Runner
 }
 
-func (l *Lifecycle) Add(r Runner) {
-	l.items = append(l.items, r)
+func (l *Lifecycle) Add(r ...Runner) {
+	l.items = append(l.items, r...)
 }
 
 func (l *Lifecycle) Start(ctx context.Context) error {

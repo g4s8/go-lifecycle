@@ -91,13 +91,15 @@ func TestLifecycle_MultipleRunners_OneErrors(t *testing.T) {
 	sentinel := errors.New("one runner failed")
 	var lf lifecycle.Lifecycle
 
-	lf.Add(lifecycle.RunnerFunc(func(ctx context.Context) error {
-		return sentinel
-	}))
-	lf.Add(lifecycle.RunnerFunc(func(ctx context.Context) error {
-		<-ctx.Done()
-		return nil
-	}))
+	lf.Add(
+		lifecycle.RunnerFunc(func(ctx context.Context) error {
+			return sentinel
+		}),
+		lifecycle.RunnerFunc(func(ctx context.Context) error {
+			<-ctx.Done()
+			return nil
+		}),
+	)
 
 	err := lf.Start(context.Background())
 	assert.ErrorIs(t, err, sentinel)
